@@ -1,7 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { Request, Response } from "express";
-// import { uploadImages } from "../config/streamifier";
-import { streamUpload } from "../middleware/uploadOneImage";
+import { uploadImages } from "../config/streamifier";
 
 
 const prisma = new PrismaClient();
@@ -22,8 +21,7 @@ export const createPost = async (req: Request, res: Response): Promise<any> => {
 
         }
 
-        // const imageUrl: any = await uploadImages(req.files as Express.Multer.File[])
-        const imageUrl: any = await streamUpload(req)
+        const imageUrl: any = await uploadImages(req.files as Express.Multer.File[])
 
         const post = await prisma.post.create({
             data: {
@@ -76,8 +74,7 @@ export const updatePost = async (req: Request, res: Response): Promise<any> => {
         }
 
 
-        // const imageUrl = await uploadImages(req.files as Express.Multer.File[])
-        const imageUrl = await streamUpload(req)
+        const imageUrl: any = await uploadImages(req.files as Express.Multer.File[])
 
         const newPost = await prisma.post.update({
             where: { id: postId },
